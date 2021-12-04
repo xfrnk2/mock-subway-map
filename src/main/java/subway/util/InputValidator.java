@@ -3,6 +3,7 @@ package subway.util;
 import java.util.List;
 import java.util.Objects;
 
+import subway.domain.LineRepository;
 import subway.domain.Station;
 import subway.domain.StationRepository;
 import subway.view.OutputView;
@@ -22,10 +23,22 @@ public class InputValidator {
 	}
 
 	public static boolean isDuplicatedStationName(String stationName) {
-		return StationRepository.stations()
+		if (StationRepository.stations()
 			.stream()
-			.anyMatch(station -> Objects.equals(station.getName(), stationName));
+			.anyMatch(station -> Objects.equals(station.getName(), stationName))){
+			OutputView.printError("이미 존재하는 역 이름입니다.");
+			return true;
+		}
+		return false;
 	}
 
-}
+	public static boolean isExistStationName(String stationName) {
+		if (StationRepository.stations()
+			.stream()
+			.noneMatch(station -> Objects.equals(station.getName(), stationName))){
+			OutputView.printError("존재하지 않는 역 이름입니다.");
+			return false;
+		}
+		return true;
+	}
 
