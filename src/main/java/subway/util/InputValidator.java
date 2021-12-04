@@ -32,7 +32,7 @@ public class InputValidator {
 		return false;
 	}
 
-	public static boolean isExistStationName(String stationName) {
+	public static boolean checkExistStationName(String stationName) {
 		if (StationRepository.stations()
 			.stream()
 			.noneMatch(station -> Objects.equals(station.getName(), stationName))){
@@ -41,4 +41,33 @@ public class InputValidator {
 		}
 		return true;
 	}
+
+
+	public static boolean checkExistLineName(String lineName) {
+		if (StationRepository.stations()
+			.stream()
+			.noneMatch(station -> Objects.equals(station.getName(), lineName))){
+			OutputView.printError("존재하지 않는 노선 이름입니다.");
+			return false;
+		}
+		return true;
+	}
+	public static boolean checkDuplicatedLineName(String lineName) {
+		if (LineRepository.lines()
+			.stream()
+			.anyMatch(station -> Objects.equals(station.getName(), lineName))){
+			OutputView.printError("이미 존재하는 노선 이름입니다.");
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean checkDuplicatedStationNames(String firstName, String secondName) {
+		if(Objects.equals(firstName, secondName)){
+			OutputView.printError("상행 종점역 이름과 하행 종점역 이름이 같습니다.");
+			return true;
+		}
+		return false;
+	}
+}
 

@@ -2,6 +2,8 @@ package subway.view;
 
 import java.util.stream.Collectors;
 
+import subway.domain.Line;
+import subway.domain.LineRepository;
 import subway.domain.Station;
 import subway.domain.StationRepository;
 
@@ -32,4 +34,7 @@ public class OutputView {
 		StationRepository.stations().stream().map(Station::getName).forEach(OutputView::printInfoMessage);
 	}
 
+	public static void printLines() {
+		LineRepository.lines().stream().map(Line::getName).forEach(OutputView::printInfoMessage);
+	}
 }

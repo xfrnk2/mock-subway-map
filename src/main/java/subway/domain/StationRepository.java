@@ -23,9 +23,13 @@ public class StationRepository {
 	}
 
 	public static void deleteStation(String stationName) {
-		if (InputValidator.checkValidName(stationName) && InputValidator.isExistStationName(stationName)) {
+		if (InputValidator.checkValidName(stationName) && InputValidator.checkExistStationName(stationName)) {
 			stations.removeIf(station -> Objects.equals(station.getName(), stationName));
 			OutputView.printInfoMessage("지하철 역이 삭제되었습니다.");
 		}
+	}
+
+	public static Station getStation(String stationName) {
+		return stations.stream().filter(station -> stationName.equals(station.getName())).findFirst().get();
 	}
 }
