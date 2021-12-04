@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import subway.util.InputValidator;
+
 public class StationRepository {
     private static final List<Station> stations = new ArrayList<>();
 
@@ -12,11 +14,13 @@ public class StationRepository {
         return Collections.unmodifiableList(stations);
     }
 
-    public static void addStation(Station station) {
-        stations.add(station);
+    public static void addStation(String stationName) {
+		InputValidator.checkValidName(stationName);
+        stations.add(new Station(stationName));
     }
 
-    public static boolean deleteStation(String name) {
-        return stations.removeIf(station -> Objects.equals(station.getName(), name));
+    public static void deleteStation(String stationName) {
+        InputValidator.checkValidName(stationName);
+        stations.removeIf(station -> Objects.equals(station.getName(), stationName));
     }
 }
